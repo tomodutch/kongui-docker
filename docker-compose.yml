@@ -31,8 +31,8 @@ services:
       - POSTGRES_DB=kongui
     ports:
       - 5433:5432
-  server:
-    image: kongui
+  kongui:
+    image: tfarla/kongui
     ports:
       - 4000:4000
     depends_on:
