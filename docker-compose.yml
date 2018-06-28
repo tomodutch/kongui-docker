@@ -1,0 +1,45 @@
+version: "3"
+services:
+  kong:
+    image: kong:latest
+    environment:
+      - KONG_PROXY_ACCESS_LOG=/dev/stdout
+      - KONG_ADMIN_ACCESS_LOG=/dev/stdout
+      - KONG_PROXY_ERROR_LOG=/dev/stderr
+      - KONG_ADMIN_ERROR_LOG=/dev/stderr
+      - KONG_ADMIN_LISTEN=0.0.0.0:8001
+      - KONG_DATABASE=postgres
+      - KONG_PG_HOST=postgres
+    ports:
+      - 8000:8000
+      - 8001:8001
+    command: sh -c "sleep 10 && kong migrations up && kong start"
+    depends_on:
+      - postgres
+      - kongui_database
+  postgres:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=kong
+      - POSTGRES_DB=kong
+    ports:
+      - 5432:5432
+  kongui_database:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=kongui
+      - POSTGRES_DB=kongui
+    ports:
+      - 5433:5432
+  server:
+    image: kongui
+    ports:
+      - 4000:4000
+    depends_on:
+      - kong
+      - kongui_database
+    environment:
+      - KONGUI_DB_HOSTNAME=kongui_database
+      - KONGUI_DB_USERNAME=kongui
+      - KONGUI_DB_PASSWORD=kongui
+      - KONGUI_DB_PORT=5432
