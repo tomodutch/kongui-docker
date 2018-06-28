@@ -2,7 +2,7 @@ FROM ubuntu:bionic
 
 RUN apt update && \
   apt install -y libssl1.0.0 libssl-dev wget && \
-  wget --quiet -S https://github.com/TFarla/kongui/releases/download/untagged-06709434237b29dca934/kongui_umbrella.tar.gz && \
+  wget --quiet -S https://github.com/TFarla/kongui/releases/download/untagged-99fd8dfd2e85df6dc165/kongui.tar.gz && \
   mkdir /kongui
 
 RUN apt-get install -y --no-install-recommends locales && \
@@ -17,6 +17,6 @@ ENV LC_ALL en_US.UTF-8
 
 WORKDIR /kongui
 
-RUN tar -xzvf ../kongui_umbrella.tar.gz
+RUN tar -xzvf ../kongui.tar.gz
 
-CMD ["bin/kongui_umbrella", "foreground"]
+CMD ["bin/kongui", "foreground"]
