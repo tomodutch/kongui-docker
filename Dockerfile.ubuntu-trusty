@@ -1,4 +1,4 @@
-FROM ubuntu:bionic
+FROM ubuntu:trusty
 
 COPY ./scripts/ubuntu.sh /opt/build.sh
 RUN bash /opt/build.sh
