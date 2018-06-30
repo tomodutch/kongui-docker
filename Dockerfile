@@ -11,5 +11,4 @@ ENV LC_ALL en_US.UTF-8
 WORKDIR /etc/kongui
 
 
-ENTRYPOINT ["bin/kongui"]
-CMD ["foreground"]
+CMD ["bin/kongui", "foreground"]
